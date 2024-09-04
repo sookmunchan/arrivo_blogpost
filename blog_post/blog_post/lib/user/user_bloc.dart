@@ -1,7 +1,7 @@
 // lib/bloc/user_bloc.dart
 
 import 'package:bloc/bloc.dart';
-import 'package:blog_post/api_repository.dart';
+import 'package:blog_post/repository/api_repository.dart';
 import 'package:blog_post/model/user_model.dart';
 import 'package:equatable/equatable.dart';
 

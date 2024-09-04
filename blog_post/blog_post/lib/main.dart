@@ -1,8 +1,8 @@
 // lib/main.dart
 
-import 'package:blog_post/api_repository.dart';
+import 'package:blog_post/repository/api_repository.dart';
 import 'package:blog_post/user/user_bloc.dart';
-import 'package:blog_post/user_lists_page.dart';
+import 'package:blog_post/view/user_lists_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
