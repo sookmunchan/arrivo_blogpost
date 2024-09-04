@@ -23,17 +23,6 @@ class ApiRepository {
     }
   }
 
-  Future<List<PostModel>> fetchPosts(int userId) async {
-    final response = await http.get(Uri.parse('$baseUrl/posts?userId=$userId'));
-
-    if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body);
-      return data.map((json) => PostModel.fromJson(json)).toList();
-    } else {
-      throw Exception('Failed to load posts');
-    }
-  }
-
   Future<void> deletePost(int id) async {
     final response = await http.delete(Uri.parse('$baseUrl/posts/$id'));
     if (response.statusCode != 200) {
@@ -53,13 +42,23 @@ class ApiRepository {
     }
   }
 
-  Future<PostModel> fetchPostById(int postId) async {
+  Future<PostModel> fetchPostByPostId(int postId) async {
     final response = await http.get(Uri.parse('$baseUrl/posts/$postId'));
 
     if (response.statusCode == 200) {
       return PostModel.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load post');
+    }
+  }
+
+  Future<List<PostModel>> fetchPostByUserId(int userId) async {
+    final response = await http.get(Uri.parse('$baseUrl/posts?userId=$userId'));
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((json) => PostModel.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load posts');
     }
   }
 
@@ -107,5 +106,19 @@ class ApiRepository {
       // Handle network error
       throw Exception('Network error: ${e.toString()}');
     }
+  }
+
+  Future<bool> updatePostTitle(int postId, String newTitle) async {
+    final response = await http.patch(
+      Uri.parse('$baseUrl/posts/$postId'),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        'title': newTitle,
+      }),
+    );
+    return response.statusCode ==
+        200; // Return true if the update is successful
   }
 }
