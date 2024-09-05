@@ -2,8 +2,6 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:blog_post/repository/api_repository.dart';
-import 'package:blog_post/model/post_model.dart';
-import 'package:equatable/equatable.dart';
 import 'post_event.dart';
 import 'post_state.dart';
 
@@ -14,7 +12,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     on<FetchPostsForUser>((event, emit) async {
       emit(PostLoading());
       try {
-        final posts = await apiRepository.fetchPosts(event.userId);
+        final posts = await apiRepository.fetchPostByUserId(event.userId);
         emit(PostLoadedForUser(posts));
       } catch (e) {
         emit(PostError('Failed to load posts'));

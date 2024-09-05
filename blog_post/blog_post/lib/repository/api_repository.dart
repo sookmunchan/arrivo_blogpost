@@ -63,13 +63,12 @@ class ApiRepository {
   }
 
   Future<void> savePost(PostModel post) async {
-    final url =
-        post.userId != 0 ? '$baseUrl/posts' : '$baseUrl/posts/${post.id}';
+    final url = post.id == 0 ? '$baseUrl/posts' : '$baseUrl/posts/${post.id}';
     final headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };
 
-    final body = post.userId != 0
+    final body = post.id == 0
         ? jsonEncode({
             'title': post.title,
             'body': post.body,
@@ -83,7 +82,7 @@ class ApiRepository {
           });
 
     try {
-      final response = post.userId != 0
+      final response = post.id == 0
           ? await http.post(
               Uri.parse(url),
               headers: headers,
@@ -95,7 +94,7 @@ class ApiRepository {
               body: body,
             );
 
-      print('addeditpost::${response.body},,${post.userId},,$url');
+      print('addeditpost::${response.body},,${post.id},,$url');
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         // Handle success if needed

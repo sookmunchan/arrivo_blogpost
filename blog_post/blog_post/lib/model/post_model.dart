@@ -1,5 +1,3 @@
-// lib/models/post_model.dart
-
 class PostModel {
   final int userId;
   final int id;
